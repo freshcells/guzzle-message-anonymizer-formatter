@@ -1,12 +1,12 @@
 <?php
 
-namespace Ivoba\Tests\GuzzleMessageAnonymizerFormatter\Integration;
+namespace Freshcells\Tests\GuzzleMessageAnonymizerFormatter\Integration;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
-use Ivoba\GuzzleMessageAnonymizerFormatter\GuzzleMessageJsonAnonymizerFormatter;
+use Freshcells\GuzzleMessageAnonymizerFormatter\GuzzleMessageJsonAnonymizerFormatter;
 use PHPUnit\Framework\TestCase;
 use WMDE\PsrLogTestDoubles\LoggerSpy;
 

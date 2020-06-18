@@ -1,6 +1,6 @@
 <?php
 
-namespace Ivoba\GuzzleMessageAnonymizerFormatter;
+namespace Freshcells\GuzzleMessageAnonymizerFormatter;
 
 use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Psr7;

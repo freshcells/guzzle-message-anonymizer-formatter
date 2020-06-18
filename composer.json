@@ -18,10 +18,10 @@
         "wmde/psr-log-test-doubles": "^2.2"
     },
     "autoload": {
-        "psr-4": { "Ivoba\\GuzzleMessageAnonymizerFormatter\\": "src" }
+        "psr-4": { "Freshcells\\GuzzleMessageAnonymizerFormatter\\": "src" }
     },
     "autoload-dev": {
-        "psr-4": { "Ivoba\\Tests\\GuzzleMessageAnonymizerFormatter\\": "tests" }
+        "psr-4": { "Freshcells\\Tests\\GuzzleMessageAnonymizerFormatter\\": "tests" }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

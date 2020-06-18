@@ -1,9 +1,9 @@
 <?php
 
-namespace Ivoba\Tests\GuzzleMessageAnonymizerFormatter\Unit;
+namespace Freshcells\Tests\GuzzleMessageAnonymizerFormatter\Unit;
 
 use GuzzleHttp\Psr7\Request;
-use Ivoba\GuzzleMessageAnonymizerFormatter\GuzzleMessageJsonAnonymizerFormatter;
+use Freshcells\GuzzleMessageAnonymizerFormatter\GuzzleMessageJsonAnonymizerFormatter;
 use PHPUnit\Framework\TestCase;
 
 class GuzzleMessageJsonAnonymizerFormatterTest extends TestCase
