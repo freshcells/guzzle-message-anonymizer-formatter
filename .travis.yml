@@ -10,7 +10,7 @@ sudo: false
 
 install: travis_retry composer install
 
-script: composer ci
+script: composer install
 
 after_success:
   - vendor/bin/phpunit
