@@ -7,7 +7,7 @@ For data protection you might not want to log personal data, like names, address
 Example usage for Json Payloads:
 
     ...
-    $formatter = new GuzzleMessageJsonAnonymizerFormatter(['X-Foo']);
+    $formatter = new GuzzleMessageJsonAnonymizerFormatter(['PersonalData']);
     $loggerMiddleware = Middleware::log($logger, $formatter);
     $stack->push($loggerMiddleware);
     $config  = [
@@ -25,10 +25,10 @@ This will log:
     ...
     {
       ...
-      "headers": {
-        "Accept": "application/json", 
+      "Payload": {
+        "Foo": "Bar", 
         ...
-        "X-Foo": "*****"
+        "PersonalData": "*****"
       }, 
       ...
     }
