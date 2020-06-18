@@ -1,0 +1,62 @@
+# Guzzle Message Anonymizer Formatter
+
+Anonymize parts of json or xml payloads before logging with a guzzle middleware.  
+For data protection you might not want to log personal data, like names, addresses etc in your requests.
+
+## Usage
+Example usage for Json Payloads:
+
+    ...
+    $formatter = new GuzzleMessageJsonAnonymizerFormatter(['X-Foo']);
+    $loggerMiddleware = Middleware::log($logger, $formatter);
+    $stack->push($loggerMiddleware);
+    $config  = [
+        ...
+        'handler'  => $stack,
+    ];
+    $client  = new Client($config);
+
+This will log:
+
+    <<<<<<<<
+    HTTP/1.1 200 OK
+    Date: Thu, 18 Jun 2020 10:04:21 GMT
+    Content-Type: application/json
+    ...
+    {
+      ...
+      "headers": {
+        "Accept": "application/json", 
+        ...
+        "X-Foo": "*****"
+      }, 
+      ...
+    }
+
+
+## Usage Symfony
+
+Declare the Formatter service:
+
+    Ivoba\GuzzleMessageAnonymizerFormatter\GuzzleMessageXmlAnonymizerFormatter:
+      arguments:
+        $elements:
+          - 'FirstName'
+          - 'LastName'
+        $attributes:
+          - 'Age'
+
+Override existing message formatter of a logger middleware:
+
+    csa_guzzle.logger.message_formatter:
+      alias: 'App\Service\GuzzleMessageXMLAnonymizerFormatter'
+
+Or declare a dedicated anonymizer_logger middleware:
+
+    guzzle.middleware.anonymizer_logger:
+      class: Closure
+      factory: ['GuzzleHttp\Middleware', log]
+      arguments: ['@monolog.logger', '@Ivoba\GuzzleMessageAnonymizerFormatter\GuzzleMessageXmlAnonymizerFormatter', 'info']
+      tags:
+        - { name: csa_guzzle.middleware, alias: anonymizer_logger }
+

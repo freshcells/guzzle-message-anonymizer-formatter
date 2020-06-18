@@ -1,0 +1,9 @@
+<PaymentInsertRQ xmlns="http://traveltainment.de/middleware/payment/"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <PaymentList>
+        <PaymentCard CardNumber="4111111111111111" CardCode="VI" ExpireDate="0220" Id="ID_1" CVC2="232">
+            <CardHolderGivenName>Max</CardHolderGivenName>
+            <CardHolderSurname>Mustermann</CardHolderSurname>
+        </PaymentCard>
+    </PaymentList>
+</PaymentInsertRQ>
