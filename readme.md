@@ -38,7 +38,7 @@ This will log:
 
 Declare the Formatter service:
 
-    Ivoba\GuzzleMessageAnonymizerFormatter\GuzzleMessageXmlAnonymizerFormatter:
+    Freshcells\GuzzleMessageAnonymizerFormatter\GuzzleMessageXmlAnonymizerFormatter:
       arguments:
         $elements:
           - 'FirstName'
@@ -49,14 +49,14 @@ Declare the Formatter service:
 Override existing message formatter of a logger middleware:
 
     csa_guzzle.logger.message_formatter:
-      alias: 'App\Service\GuzzleMessageXMLAnonymizerFormatter'
+      alias: 'Freshcells\GuzzleMessageAnonymizerFormatter\GuzzleMessageXMLAnonymizerFormatter'
 
 Or declare a dedicated anonymizer_logger middleware:
 
     guzzle.middleware.anonymizer_logger:
       class: Closure
       factory: ['GuzzleHttp\Middleware', log]
-      arguments: ['@monolog.logger', '@Ivoba\GuzzleMessageAnonymizerFormatter\GuzzleMessageXmlAnonymizerFormatter', 'info']
+      arguments: ['@monolog.logger', '@Freshcells\GuzzleMessageAnonymizerFormatter\GuzzleMessageXmlAnonymizerFormatter', 'info']
       tags:
         - { name: csa_guzzle.middleware, alias: anonymizer_logger }
 
