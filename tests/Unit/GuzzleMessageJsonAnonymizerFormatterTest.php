@@ -2,6 +2,7 @@
 
 namespace Freshcells\Tests\GuzzleMessageAnonymizerFormatter\Unit;
 
+use Freshcells\GuzzleMessageAnonymizerFormatter\AbstractAnonymizerFormatter;
 use GuzzleHttp\Psr7\Request;
 use Freshcells\GuzzleMessageAnonymizerFormatter\GuzzleMessageJsonAnonymizerFormatter;
 use PHPUnit\Framework\TestCase;
@@ -14,11 +15,20 @@ class GuzzleMessageJsonAnonymizerFormatterTest extends TestCase
 
         $props       = ['CardHolderGivenName', 'CardHolderSurname', 'CVC2', 'CardNumber'];
         $substitute = '*****';
-        $formatter  = new GuzzleMessageJsonAnonymizerFormatter($props, $substitute);
-        $request    = new Request('GET', 'http://test', [], $string);
+        $headersToSubstitute = [
+            'Authorization' => $substitute
+        ];
+        $formatter  = new GuzzleMessageJsonAnonymizerFormatter(
+            $props,
+            $substitute,
+            AbstractAnonymizerFormatter::DEBUG,
+            $headersToSubstitute
+        );
+        $request    = new Request('GET', 'http://test', ['Authorization' => 'Bearer: pssst'], $string);
         $res        = $formatter->format($request);
         foreach ($props as $prop) {
             $this->assertTrue(strpos($res, '"'.$prop.'": "'.$substitute.'"') > 0);
         }
+        $this->assertTrue(strpos($res, 'Authorization: '.$substitute) > 0);
     }
 }
