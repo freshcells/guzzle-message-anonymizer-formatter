@@ -47,10 +47,12 @@ Declare the Formatter service:
     Freshcells\GuzzleMessageAnonymizerFormatter\GuzzleMessageXmlAnonymizerFormatter:
       arguments:
         $elements:
-          - 'FirstName'
-          - 'LastName'
+          - 'none:FirstName'
+          - 'none:LastName'
         $attributes:
-          - 'Age'
+          - 'none:Customer[@Age]'
+        $namespaces:
+          none: 'http://namespace.de/middleware/payment/'
 
 Override existing message formatter of a logger middleware:
 
