@@ -22,30 +22,36 @@ class GuzzleMessageXmlAnonymizerFormatter extends AbstractAnonymizerFormatter
 
     protected function hidePrivateData(string $content)
     {
-        $doc = new \DOMDocument();
-        $doc->loadXML($content);
-        $xpath = new \DOMXPath($doc);
-        foreach ($this->namespaces as $namespace => $uri) {
-            $xpath->registerNamespace($namespace, $uri);
-        }
-
-        foreach ($this->elements as $field) {
-            $query   = '//'.$field.'/text()';
-            $entries = $xpath->query($query);
-            foreach ($entries as $entry) {
-                $entry->data = $this->substitute;
+        try {
+            $doc = new \DOMDocument();
+            $doc->loadXML($content);
+            $xpath = new \DOMXPath($doc);
+            foreach ($this->namespaces as $namespace => $uri) {
+                $xpath->registerNamespace($namespace, $uri);
             }
-        }
 
-        foreach ($this->attributes as $attribute) {
-            $entries = $xpath->query('//'.$attribute);
-            foreach ($entries as $entry) {
-                foreach ($entry->attributes as $attribute) {
-                    $attribute->value = $this->substitute;
+            foreach ($this->elements as $field) {
+                $query   = '//'.$field.'/text()';
+                $entries = $xpath->query($query);
+                foreach ($entries as $entry) {
+                    $entry->data = $this->substitute;
                 }
             }
+
+            foreach ($this->attributes as $attribute) {
+                $entries = $xpath->query('//'.$attribute);
+                foreach ($entries as $entry) {
+                    foreach ($entry->attributes as $attribute) {
+                        $attribute->value = $this->substitute;
+                    }
+                }
+            }
+
+            return $doc->saveXml();
+        } catch (\Exception $e) {
+            // noop
         }
 
-        return $doc->saveXml();
+        return $content;
     }
 }
