@@ -2,8 +2,6 @@
 
 namespace Freshcells\GuzzleMessageAnonymizerFormatter;
 
-use function GuzzleHttp\Psr7\parse_request;
-
 class GuzzleMessageXmlAnonymizerFormatter extends AbstractAnonymizerFormatter
 {
     protected $namespaces = [];
