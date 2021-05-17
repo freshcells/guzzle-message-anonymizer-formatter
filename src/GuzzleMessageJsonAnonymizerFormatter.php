@@ -8,10 +8,11 @@ class GuzzleMessageJsonAnonymizerFormatter extends AbstractAnonymizerFormatter
         array $elements,
         string $substitute = '*****',
         string $template = self::DEBUG,
-        array $headersToSubstitute = []
+        array $headersToSubstitute = [],
+        array $truncateElements = []
     )
     {
-        parent::__construct($elements, $attributes = [], $substitute, $template, $headersToSubstitute);
+        parent::__construct($elements, [], $substitute, $template, $headersToSubstitute, $truncateElements);
     }
 
     protected function hidePrivateData(string $content)
@@ -21,6 +22,16 @@ class GuzzleMessageJsonAnonymizerFormatter extends AbstractAnonymizerFormatter
             $content = preg_replace(
                 '/\"'.$field.'\"\:(.*?)\".*?\"/s',
                 '"'.$field.'":$1"'.$this->substitute.'"',
+                $content
+            );
+        }
+
+        foreach ($this->truncateElements as $truncateElement => $maxLength) {
+            $content = preg_replace_callback(
+                '/\"'.$truncateElement.'\"\:(.*?)\"(.*?)\"/s',
+                function ($hit) use ($truncateElement, $maxLength) {
+                    return '"'.$truncateElement.'":'.$hit[1].'"'.$this->truncateElement($hit[2], $maxLength).'"';
+                },
                 $content
             );
         }

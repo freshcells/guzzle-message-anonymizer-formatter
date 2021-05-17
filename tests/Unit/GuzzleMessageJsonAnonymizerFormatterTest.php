@@ -13,22 +13,27 @@ class GuzzleMessageJsonAnonymizerFormatterTest extends TestCase
     {
         $string = file_get_contents(__DIR__.'/../Fixtures/example.json');
 
-        $props       = ['CardHolderGivenName', 'CardHolderSurname', 'CVC2', 'CardNumber'];
-        $substitute = '*****';
+        $props               = ['CardHolderGivenName', 'CardHolderSurname', 'CVC2', 'CardNumber'];
+        $substitute          = '*****';
         $headersToSubstitute = [
-            'Authorization' => $substitute
+            'Authorization' => $substitute,
         ];
-        $formatter  = new GuzzleMessageJsonAnonymizerFormatter(
+        $truncateElements    = ['VeryLongText' => 25];
+        $formatter           = new GuzzleMessageJsonAnonymizerFormatter(
             $props,
             $substitute,
             AbstractAnonymizerFormatter::DEBUG,
-            $headersToSubstitute
+            $headersToSubstitute,
+            $truncateElements
         );
-        $request    = new Request('GET', 'http://test', ['Authorization' => 'Bearer: pssst'], $string);
-        $res        = $formatter->format($request);
+        $request             = new Request('GET', 'http://test', ['Authorization' => 'Bearer: pssst'], $string);
+        $res                 = $formatter->format($request);
         foreach ($props as $prop) {
             $this->assertTrue(strpos($res, '"'.$prop.'": "'.$substitute.'"') > 0);
         }
-        $this->assertTrue(strpos($res, 'Authorization: '.$substitute) > 0);
+        foreach ($props as $prop) {
+            $this->assertTrue(strpos($res, '"'.$prop.'": "'.$substitute.'"') > 0);
+        }
+        $this->assertTrue(strpos($res, 'Powder carrot cake jel...') > 0);
     }
 }

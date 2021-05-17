@@ -12,10 +12,11 @@ class GuzzleMessageXmlAnonymizerFormatter extends AbstractAnonymizerFormatter
         string $substitute = '*****',
         string $template = self::DEBUG,
         array $headersToSubstitute = [],
-        array $namespaces = []
+        array $namespaces = [],
+        array $truncateElements = []
     ) {
         $this->namespaces = $namespaces;
-        parent::__construct($elements, $attributes, $substitute, $template, $headersToSubstitute);
+        parent::__construct($elements, $attributes, $substitute, $template, $headersToSubstitute, $truncateElements);
     }
 
     protected function hidePrivateData(string $content)
@@ -26,6 +27,14 @@ class GuzzleMessageXmlAnonymizerFormatter extends AbstractAnonymizerFormatter
             $xpath = new \DOMXPath($doc);
             foreach ($this->namespaces as $namespace => $uri) {
                 $xpath->registerNamespace($namespace, $uri);
+            }
+
+            foreach ($this->truncateElements as $truncateElement => $maxLength) {
+                $query   = '//'.$truncateElement.'/text()';
+                $entries = $xpath->query($query);
+                foreach ($entries as $entry) {
+                    $entry->data =  $this->truncateElement($entry->nodeValue, $maxLength);
+                }
             }
 
             foreach ($this->elements as $field) {

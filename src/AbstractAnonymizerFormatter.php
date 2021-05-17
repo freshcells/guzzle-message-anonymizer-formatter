@@ -3,7 +3,6 @@
 namespace Freshcells\GuzzleMessageAnonymizerFormatter;
 
 use GuzzleHttp\MessageFormatter;
-use GuzzleHttp\Psr7;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -14,6 +13,7 @@ abstract class AbstractAnonymizerFormatter extends MessageFormatter
     protected $attributes = [];
     protected $substitute;
     protected $headersToSubstitute = [];
+    protected $truncateElements = [];
 
     /** @var string Template used to format log messages */
     protected $template;
@@ -25,13 +25,15 @@ abstract class AbstractAnonymizerFormatter extends MessageFormatter
         array $attributes = [],
         string $substitute = '*****',
         string $template = self::DEBUG,
-        array $headersToSubstitute = []
+        array $headersToSubstitute = [],
+        array $truncateElements = []
     ) {
         $this->elements            = $elements;
         $this->attributes          = $attributes;
         $this->substitute          = $substitute;
         $this->template            = $template;
         $this->headersToSubstitute = $headersToSubstitute;
+        $this->truncateElements    = $truncateElements;
     }
 
     /**
@@ -178,6 +180,11 @@ abstract class AbstractAnonymizerFormatter extends MessageFormatter
         }
 
         return "{$msg}\r\n\r\n".$this->hidePrivateData($message->getBody());
+    }
+
+    protected function truncateElement(string $content, int $maxLength)
+    {
+        return strlen($content) > $maxLength ? substr($content, 0, $maxLength - 3).'...' : $content;
     }
 
     protected function headers(MessageInterface $message)

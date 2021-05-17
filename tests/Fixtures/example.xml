@@ -4,6 +4,7 @@
         <PaymentCard CardNumber="4111111111111111" CardCode="VI" ExpireDate="0220" Id="ID_1" CVC2="232">
             <CardHolderGivenName>Max</CardHolderGivenName>
             <CardHolderSurname>Mustermann</CardHolderSurname>
+            <VeryLongText>Powder carrot cake jelly beans cake danish halvah. Marzipan sugar plum I love sugar plum soufflé dragée gummies jelly-o cupcake. Muffin donut donut icing fruitcake I love caramels biscuit tootsie roll.</VeryLongText>
         </PaymentCard>
     </PaymentList>
 </PaymentInsertRQ>

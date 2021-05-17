@@ -17,13 +17,15 @@ class GuzzleMessageXmlAnonymizerFormatterTest extends TestCase
         $tags       = ['none:CardHolderGivenName', 'none:CardHolderSurname'];
         $attributes = ['none:PaymentCard[@CVC2]', 'none:PaymentCard[@CardNumber]'];
         $substitute = '*****';
+        $truncateElements    = ['none:VeryLongText' => 25];
         $formatter  = new GuzzleMessageXMLAnonymizerFormatter(
             $tags,
             $attributes,
             $substitute,
             AbstractAnonymizerFormatter::DEBUG,
             [],
-            $namespaces
+            $namespaces,
+            $truncateElements
         );
         $request    = new Request('GET', 'http://test', [], $string);
         $res        = $formatter->format($request);
@@ -38,5 +40,6 @@ class GuzzleMessageXmlAnonymizerFormatterTest extends TestCase
             preg_match('/ '.$attribute.'="(.*?)"/', $res, $match);
             $this->assertEquals($substitute, $match[1]);
         }
+        $this->assertTrue(strpos($res, 'Powder carrot cake jel...') > 0);
     }
 }
