@@ -1,6 +1,6 @@
 # Guzzle Message Anonymizer Formatter
 
-Anonymize parts of json or xml payloads and request headers before logging with a guzzle middleware.  
+Anonymize or truncate parts of json or xml payloads and request headers before logging with a guzzle middleware.  
 For data protection you might not want to log personal data, like names, addresses etc in your requests.
 
 ## Usage
@@ -53,6 +53,8 @@ Declare the Formatter service:
           - 'none:Customer[@Age]'
         $namespaces:
           none: 'http://namespace.de/middleware/payment/'
+        $truncateElements
+            VeryLongText: 200
 
 Override existing message formatter of a logger middleware:
 
