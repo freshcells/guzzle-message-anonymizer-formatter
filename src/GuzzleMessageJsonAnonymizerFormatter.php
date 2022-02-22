@@ -27,13 +27,18 @@ class GuzzleMessageJsonAnonymizerFormatter extends AbstractAnonymizerFormatter
         }
 
         foreach ($this->truncateElements as $truncateElement => $maxLength) {
-            $content = preg_replace_callback(
+            // todo this regex does not work reliably for all cases
+            $truncatedContent = preg_replace_callback(
                 '/\"'.$truncateElement.'\"\:(.*?)\"((\\\\.|[^\\\"])*?)\"/s', // quotes in quotes
                 function ($hit) use ($truncateElement, $maxLength) {
                     return '"'.$truncateElement.'":'.$hit[1].'"'.$this->truncateElement($hit[2], $maxLength).'"';
                 },
                 $content
             );
+
+            if($truncatedContent) {
+                $content = $truncatedContent;
+            }
         }
 
         return $content;

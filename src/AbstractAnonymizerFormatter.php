@@ -179,7 +179,9 @@ abstract class AbstractAnonymizerFormatter extends MessageFormatter
             }
         }
 
-        return "{$msg}\r\n\r\n".$this->hidePrivateData($message->getBody());
+        $response = (string)$message->getBody();
+
+        return "{$msg}\r\n\r\n".($response !== '' ? $this->hidePrivateData($response) : $response);
     }
 
     protected function truncateElement(string $content, int $maxLength)
