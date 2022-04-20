@@ -8,7 +8,7 @@
     ],
     "require": {
         "php": ">=7.2",
-        "guzzlehttp/guzzle": "^6.1"
+        "guzzlehttp/guzzle": "^7.0"
     },
     "suggest": {
         "csa/guzzle-bundle": "Guzzle bundle for symfony"
