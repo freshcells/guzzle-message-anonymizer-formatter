@@ -15,7 +15,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^8",
-        "wmde/psr-log-test-doubles": "^2.2"
+        "jeroen/psr-log-test-doubles": "^2.2|^3.0"
     },
     "autoload": {
         "psr-4": { "Freshcells\\GuzzleMessageAnonymizerFormatter\\": "src" }
