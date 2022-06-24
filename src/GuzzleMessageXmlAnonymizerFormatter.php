@@ -23,7 +23,7 @@ class GuzzleMessageXmlAnonymizerFormatter extends AbstractAnonymizerFormatter
     {
         try {
             $doc = new \DOMDocument();
-            $doc->loadXML($content);
+            $doc->loadXML($this->prepareContent($content));
             $xpath = new \DOMXPath($doc);
             foreach ($this->namespaces as $namespace => $uri) {
                 $xpath->registerNamespace($namespace, $uri);
@@ -60,5 +60,10 @@ class GuzzleMessageXmlAnonymizerFormatter extends AbstractAnonymizerFormatter
         }
 
         return $content;
+    }
+
+    protected function prepareContent(string $content): string
+    {
+       return $content;
     }
 }
