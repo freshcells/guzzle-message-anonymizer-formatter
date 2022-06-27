@@ -202,4 +202,9 @@ abstract class AbstractAnonymizerFormatter extends MessageFormatter
 
         return trim($result);
     }
+
+    protected function prepareContent(string $content): string
+    {
+        return $content;
+    }
 }
