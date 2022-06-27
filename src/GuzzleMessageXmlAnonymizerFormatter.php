@@ -61,9 +61,4 @@ class GuzzleMessageXmlAnonymizerFormatter extends AbstractAnonymizerFormatter
 
         return $content;
     }
-
-    protected function prepareContent(string $content): string
-    {
-       return $content;
-    }
 }

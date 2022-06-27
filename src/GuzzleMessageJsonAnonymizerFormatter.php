@@ -17,6 +17,7 @@ class GuzzleMessageJsonAnonymizerFormatter extends AbstractAnonymizerFormatter
 
     protected function hidePrivateData(string $content)
     {
+        $content = $this->prepareContent($content);
         //tags
         foreach ($this->elements as $field) {
             $content = preg_replace(
